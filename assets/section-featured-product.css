@@ -61,16 +61,138 @@
   }
 
   .background-secondary .featured-product:not(.product--no-media).product--right > .product__info-wrapper {
-    padding: 0 5rem 0 0;
+    padding: 0 0 0 5rem;
   }
 
   .featured-product:not(.product--no-media) > .product__info-wrapper {
-    padding: 0 7rem;
+    padding: 0 0 0 7rem;
   }
 
   .background-secondary .featured-product {
     padding: 6rem 7rem;
     position: relative;
     z-index: 1;
+  }
+}
+
+/* Custom code by Igor */
+
+.product-atc-wrapper {
+  gap: 0 10px;
+}
+
+.product-atc-wrapper .product-form {
+  margin: 0;
+}
+
+.product-atc-wrapper quantity-input {
+  max-width: 10rem;
+}
+
+@media (max-width: 768px) {
+  .product-atc-wrapper .product-form__input, 
+  .product-atc-wrapper quantity-input {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .product-atc-wrapper .product-form-wrapper {
+    margin-top: 1rem;
+    width: 100%;
+  }
+}
+
+.product-atc-wrapper .quantity__button {
+  max-width: 3rem;
+}
+
+.quantity__button svg {
+  width: 14px;
+}
+
+.product-atc-wrapper .price-wrapper {
+  margin-left: 25px;
+  position: relative;
+}
+
+.product-atc-wrapper .price-wrapper::before {
+  content: '';
+  width: 8px;
+  height: 1px;
+  background: #000;
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.product-atc-wrapper .price {
+  line-height: calc(1 + .2 / var(--font-body-scale));
+}
+
+.product-atc-wrapper .price * {
+  margin: 0;
+}
+
+.product-atc-wrapper .price__sale s {
+  color: #B09F97;
+}
+
+.product-atc-wrapper .product-form__input,
+.product-atc-wrapper .product-form__submit {
+  margin-bottom: 0px;
+}
+
+.product-atc-wrapper .product-form__submit {
+  text-transform: uppercase;
+}
+
+.product-atc-wrapper .price .price-item {
+  margin-right: 0px;
+}
+
+.product-form-additional-info {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .product-form-additional-info {
+    margin-top: 0.75rem;
+    margin-bottom: 0px;
+  }
+}
+
+.featured-product .icon-with-text img {
+  width: 100%;
+  height: auto;
+}
+
+.product-media-main,
+.product-media-thumb {
+  overflow: hidden;
+}
+
+.product-media-main img,
+.product-media-thumb img {
+  width: 100%;
+  height: auto;
+}
+
+.product-media-thumb .swiper-slide-active img {
+  border: 2px solid #61402E;
+}
+
+@media (max-width: 768px) {
+  .icon-with-text {
+    flex-wrap: wrap;
+    gap: 0 10px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .icon-with-text--horizontal .icon-with-text__item {
+    min-width: calc(100% / 3 - 20px / 3);
+    width: calc(100% / 3 - 20px / 3);
   }
 }

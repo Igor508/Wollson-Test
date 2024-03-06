@@ -40,7 +40,7 @@
   class="icon-with-text icon-with-text--{{ block.settings.layout }} list-unstyled{% if text_only_all_items %} icon-with-text--text-only{% endif %}"
   {{ block.shopify_attributes }}
 >
-  {%- unless heading_1_empty -%}
+  {% comment %} {%- unless heading_1_empty -%}
     <li class="icon-with-text__item">
       {%- if block.settings.image_1 == null -%}
         {%- render 'icon-accordion', icon: block.settings.icon_1 -%}
@@ -105,5 +105,42 @@
         {{- block.settings.heading_3 -}}
       </span>
     </li>
-  {%- endunless -%}
+  {%- endunless -%} {% endcomment %}
+
+
+  {% comment %} Custom code by Igor {% endcomment %}
+
+  {% for i in (1..5) %}
+
+    {% liquid
+      
+      assign icon_key = 'icon_' | append: i
+      assign image_key = 'image_' | append: i
+      assign heading_key = 'heading_' | append: i
+
+    %}
+
+    <li class="icon-with-text__item">
+      {%- if block.settings[image_key] == null -%}
+        {%- render 'icon-accordion', icon: block.settings[icon_key] -%}
+      {%- else -%}
+        <img
+          src="{{ block.settings[image_key] | image_url: width: 300 }}"
+          {% if block.settings[image_key].alt != blank %}
+            alt="{{ block.settings[image_key].alt | escape }}"
+          {% else %}
+            role="presentation"
+          {% endif %}
+          height="auto"
+          width="auto"
+          loading="lazy"
+        >
+      {%- endif -%}
+      <span class="h4 inline-richtext">
+        {{- block.settings[heading_key] -}}
+      </span>
+    </li>
+
+  {% endfor %}
+
 </ul>

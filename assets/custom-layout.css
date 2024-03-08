@@ -14,6 +14,10 @@
   display: flex;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 .flex-grow {
   flex-grow: 1;
 }
@@ -30,8 +34,23 @@
   align-items: flex-end;
 }
 
+.gap-h {
+  gap: 0 1rem;
+}
+
 @media (max-width: 768px) {
   .m-fd-column {
     flex-direction: column;
   }
+}
+
+@media (min-width: 769px) {
+  .col-2 {
+    max-width: 50%;
+    min-width: 50%;
+  }
+}
+
+.text-upper {
+  text-transform: uppercase;
 }

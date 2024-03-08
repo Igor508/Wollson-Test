@@ -1,0 +1,30 @@
+{% unless product.has_only_default_variant %}
+
+  {% assign cur_variant = product.selected_or_first_available_variant %}
+
+  <div class="product-options">
+    {% for option in product.options_with_values %}
+      {% assign opt_idx = forloop.index %}
+      {% assign opt_key = 'option' | append: opt_idx %}
+      <div class="product-option-group">
+        <label>{{ option.name }}</label>
+        <ul class="product-option-swatch d-flex">
+          {% for value in option.values %}
+            <li class="swatch-button">
+              <input 
+                type="radio" 
+                name="{{ product.id }}-{{ option.name | handle }}" 
+                id="{{ product.id }}-option{{ opt_idx }}-{{ value | handle }}" 
+                value="{{ value }}" 
+                data-option="option{{ opt_idx }}"
+                {% if cur_variant[opt_key] == value %}checked{% endif %} 
+              />
+              <label for="{{ product.id }}-option{{ opt_idx }}-{{ value | handle }}">{{ value }}</label>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endunless %}

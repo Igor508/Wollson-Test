@@ -1,0 +1,60 @@
+<form method="post" action="/cart/add" class="single-product-form">
+
+  {% assign cur_variant = product.selected_or_first_available_variant %}
+	
+  <select class="hidden" name="id">
+    {% for variant in product.variants %}
+      <option 
+        value="{{ variant.id }}" 
+        data-option1="{{ variant.option1 }}"
+        {% if variant.option2 %}
+          data-option2="{{ variant.option2 }}"
+        {% endif %}
+        {% if variant.option3 %}
+          data-option3="{{ variant.option3 }}"
+        {% endif %}
+        data-price="{{ variant.price | money }}"
+        {% if variant.compare_at_price > variant.price %}
+          data-compare-price="{{ variant.compare_at_price | money }}"
+        {% endif %}
+        {% if variant == cur_variant %}selected{% endif %}
+      >
+        {{ variant.title }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <div class="form-atc-wrapper d-flex align-items-end m-fd-column gap-h">
+    {% if block.settings.show_qty %}
+      <div class="single-product-qty d-flex">
+        <button class="qty-minus">{% render 'icon-minus' %}</button>
+        <input type="text" value="1" name="quantity" />
+        <button class="qty-plus">{% render 'icon-plus' %}</button>
+      </div>
+    {% else %}
+      <input type="hidden" id="quantity" name="quantity" value="1"/>
+    {% endif %}
+    <div class="button-wrapper flex-grow">
+      {% if block.settings.additional_info %}
+        <div class="additional_info center hide--mobile">{{ block.settings.additional_info }}</div>
+      {% endif %}
+      <button class="single-product-add text-upper" type="submit">
+        Add To Cart
+        {% if block.settings.show_price %}
+          - 
+          <span class="single-product-price">
+            {{ cur_variant.price | money }}
+            {% if cur_variant.compare_at_price > cur_variant.price %}
+              <s class="compare-price">{{ cur_variant.compare_at_price | money }}</s>
+            {% endif %}
+          </span>
+        {% endif %}
+      </button>
+    </div>
+  </div>
+    
+  {% if block.settings.additional_info %}
+    <div class="additional_info center hide--desktop">{{ block.settings.additional_info }}</div>
+  {% endif %}
+
+</form> 

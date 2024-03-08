@@ -1,0 +1,186 @@
+{{ 'component-single-product.css' | asset_url | stylesheet_tag }}
+
+{% comment %} Swiepr plugin {% endcomment %}
+<link rel="stylesheet" href="https://unpkg.com/swiper@6/swiper-bundle.css" />
+<script src="https://unpkg.com/swiper@6/swiper-bundle.min.js"></script>
+
+<style>
+
+  #shopify-section-{{ section.id }} {
+    background: {{ section.settings.section_bg }};
+
+    --button-height: 45px;
+
+    --section-color-white: #FFF;
+    --section-color-yellow: #f8c063;
+
+    --section-text: {{ section.settings.section_text }};
+    --section-accent: {{ section.settings.section_accent }};
+  }
+
+</style>
+
+{% if section.settings.product %}
+  
+  {% assign product = all_products[section.settings.product] %}
+
+  <div class="page-width">
+    <div class="single-product single-product-wrapper d-flex m-fd-column">
+
+      <div class="product--media col-2 col-sm-1">
+        {% render 'single-product-media', product: product %}
+      </div>
+
+      <div class="product--info col-2 col-sm-1">
+        {% for block in section.blocks %}
+          {% capture block_content %}
+            {% case block.type %}
+
+              {% when 'title' %}
+                <h2 class="product_title h1">{{ product.title }}</h2>
+              
+              {% when 'desc' %}
+                <div class="product_desc">{{ product.description }}</div>
+
+              {% when 'variants' %}
+                {% render 'single-product-v-picker', product: product %}
+
+              {% when 'buy_buttons' %}
+                {% render 'single-product-form', product: product, block: block %}
+
+              {% when 'icon' %}
+                {% render 'single-product-ingredient-icons', block: block %}
+
+            {% endcase %}
+          {% endcapture %}
+          <div class="single-product-block">{{ block_content }}</div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+
+  <script src="{{ 'single-product.js' | asset_url }}" defer="defer"></script>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Single product",
+  "class": "section-single-product",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Background",
+      "default": "#fcf4ee"
+    },
+    {
+      "type": "color",
+      "id": "section_text",
+      "label": "Text",
+      "default": "#886d5e"
+    },
+    {
+      "type": "color",
+      "id": "section_accent",
+      "label": "Accent",
+      "default": "#61402e"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1,
+      "settings": [
+
+      ]
+    },
+    {
+      "type": "desc",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+
+      ]
+    },
+    {
+      "type": "variants",
+      "name": "Variants",
+      "limit": 1,
+      "settings": [
+
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "additional_info",
+          "label": "Additional information"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_qty",
+          "label": "Show quantity selector"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "label": "Show price"
+        }
+      ]
+    },
+    {
+      "type": "icon",
+      "name": "Ingredient icons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon_1",
+          "label": "Icon 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_2",
+          "label": "Icon 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_3",
+          "label": "Icon 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_4",
+          "label": "Icon 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_5",
+          "label": "Icon 5"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Single product"
+    }
+  ]
+}
+{% endschema %}

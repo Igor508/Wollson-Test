@@ -1,0 +1,19 @@
+<div class="single-product-ingredients d-flex flex-wrap">
+  {% for i in (1..5) %}
+    {% assign key = 'icon_' | append: forloop.index %}
+    {% assign ing_img = block.settings[key] %}
+    <span>
+      <img
+        src="{{ ing_img | image_url: width: 300 }}"
+        {% if ing_img.alt != blank %}
+          alt="{{ ing_img.alt | escape }}"
+        {% else %}
+          role="presentation"
+        {% endif %}
+        height="auto"
+        width="auto"
+        loading="lazy"
+      />
+    </span>
+  {% endfor %}
+</div>
